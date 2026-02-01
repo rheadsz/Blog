@@ -1,0 +1,204 @@
+<!DOCTYPE html> <html lang="en"> <head>
+    <meta charset="UTF-8"> <meta 
+    name="viewport" 
+    content="width=device-width, 
+    initial-scale=1.0"> <title>How I Use Claude 
+    Code from My iPhone with Termius and 
+    Tailscale</title> <style>
+        * {
+            margin: 0; padding: 0; box-sizing: 
+            border-box;
+        } ```
+    body {
+        background-color: #0a0a0a; color: 
+        #e0e0e0; font-family: -apple-system, 
+        BlinkMacSystemFont, 'Segoe UI', Roboto, 
+        'Helvetica Neue', Arial, sans-serif; 
+        line-height: 1.6; padding: 0;
+    } .container {
+        max-width: 720px; margin: 0 auto; 
+        padding: 2rem 1.5rem;
+    } .meta {
+        color: #888; font-size: 1rem; 
+        margin-bottom: 1rem;
+    } .tags {
+        margin-bottom: 2rem; display: flex; 
+        gap: 1rem; flex-wrap: wrap;
+    } .tag {
+        color: #2ea043; text-decoration: none; 
+        font-size: 0.95rem;
+    } .tag:hover {
+        text-decoration: underline;
+    } h1 {
+        font-size: 2.5rem; font-weight: 700; 
+        line-height: 1.2; margin-bottom: 2rem; 
+        color: #fff;
+    } h2 {
+        font-size: 1.8rem; font-weight: 600; 
+        margin-top: 2.5rem; margin-bottom: 
+        1.5rem; color: #fff;
+    } p {
+        margin-bottom: 1.5rem; font-size: 
+        1.05rem; color: #d0d0d0;
+    } a {
+        color: #2ea043; text-decoration: none;
+    } a:hover {
+        text-decoration: underline;
+    } code {
+        background-color: #1a1a1a; padding: 
+        0.2rem 0.4rem; border-radius: 3px; 
+        font-family: 'SF Mono', Monaco, 
+        'Cascadia Code', 'Roboto Mono', 
+        Consolas, 'Courier New', monospace; 
+        font-size: 0.9em; color: #2ea043;
+    } pre {
+        background-color: #1a1a1a; 
+        border-radius: 8px; padding: 1.5rem; 
+        overflow-x: auto; margin: 1.5rem 0; 
+        border: 1px solid #2a2a2a;
+    } pre code {
+        background: none; padding: 0; color: 
+        #e0e0e0; font-size: 0.95rem;
+    } .keyword { color: #c792ea; } .command { 
+    color: #82aaff; } .comment { color: 
+    #5c6370; } .string { color: #c3e88d; } ul, 
+    ol {
+        margin-left: 2rem; margin-bottom: 
+        1.5rem;
+    } li {
+        margin-bottom: 0.5rem; color: #d0d0d0;
+    } @media (max-width: 640px) {
+        h1 {
+            font-size: 2rem;
+        } h2 {
+            font-size: 1.5rem;
+        } .container {
+            padding: 1.5rem 1rem;
+        }
+    } </style> ``` </head> <body> <div 
+    class="container">
+        <div class="meta">January 31, 2026 Rhea 
+DSouza</div> ```
+    <div class="tags">
+        <a href="#" class="tag">mobile</a> <a 
+        href="#" class="tag">ai</a> <a href="#" 
+        class="tag">claude</a> <a href="#" 
+        class="tag">ssh</a>
+    </div> <h1>How I Use Claude Code from My 
+    iPhone with Termius and Tailscale</h1> <p>I 
+    wanted to use <a 
+    href="https://www.anthropic.com/claude/code">Claude 
+    Code</a> from my phone. The problem? Claude 
+    Code is a terminal application, and iOS 
+    doesn't have a real terminal. The solution 
+    turned out to be simpler than I expected: 
+    SSH into my Mac from my phone using Termius 
+    and Tailscale.</p> <p>This setup gives me 
+    full access to Claude Code from anywhere - 
+    on the train, in bed, between meetings. The 
+    initial setup takes about 15 minutes and 
+    just works once configured.</p> <h2>The 
+    Architecture</h2> <p>The setup uses three 
+    simple tools that work together without 
+    custom integration. Your Mac runs Claude 
+    Code, Tailscale creates a private network 
+    between your devices, Termius gives you a 
+    terminal on iOS, and SSH handles the 
+    connection.</p> <p>No port forwarding, no 
+    complex firewall rules, no exposing your 
+    computer to the internet. Tailscale handles 
+    all of that automatically.</p> <h2>Step 1: 
+    Install Tailscale Everywhere</h2> <p>First, 
+    install Tailscale on both your Mac and 
+    iPhone. This creates a private mesh network 
+    between your devices with persistent IP 
+    addresses.</p> <p>On your Mac:</p> 
+    <pre><code><span class="command">brew 
+    install</span> tailscale</code></pre> <p>On 
+    your iPhone, download Tailscale from the 
+    App Store. Sign in with the same account on 
+    both devices. Once connected, each device 
+    gets a permanent IP address like 
+    <code>100.x.x.x</code> that works even when 
+    you switch WiFi networks or move between 
+    cellular and WiFi.</p> <h2>Step 2: Enable 
+    Remote Login on Mac</h2> <p>Your Mac needs 
+    to accept SSH connections. Go to System 
+    Settings General Sharing, then enable 
+    Remote Login. Make sure your user account 
+    is allowed to connect.</p> <p>You can 
+    verify SSH is running:</p> <pre><code><span 
+    class="command">sudo systemsetup</span> 
+    -getremotelogin</code></pre> <p>It should 
+    say "Remote Login: On".</p> <h2>Step 3: 
+    Install Termius on iPhone</h2> <p>Download 
+    Termius from the App Store. It's the best 
+    SSH client I've found for iOS - clean 
+    interface, good keyboard, and reliable 
+    connection handling.</p> <p>In Termius, 
+    create a new host:</p> <ul>
+        <li><strong>Hostname:</strong> Your 
+Mac's Tailscale IP (find it in the Tailscale 
+app)</li>
+        <li><strong>Username:</strong> Your Mac 
+username</li>
+        <li><strong>Password:</strong> Your Mac 
+password</li>
+    </ul> <p>Save it, then connect. You should 
+    be dropped into a terminal on your Mac.</p> 
+    <h2>Step 4: Use Claude Code</h2> <p>If you 
+    haven't already, install Claude Code on 
+    your Mac:</p> <pre><code><span 
+    class="command">npm install</span> -g 
+    @anthropics/claude-code</code></pre> <p>Now 
+    from your iPhone via Termius, you can just 
+    run:</p> <pre><code><span 
+    class="command">claude</span></code></pre> 
+    <p>And you're coding with Claude from your 
+    phone. The actual compute happens on your 
+    Mac (which makes API calls to Anthropic), 
+    but you're controlling everything from 
+    iOS.</p> <h2>My Workflow</h2> <p>I use this 
+    mostly for quick coding tasks when I'm away 
+    from my desk. Simple scripts, file 
+    conversions, data analysis, or just 
+    exploring ideas with Claude. The limiting 
+    factor is the phone keyboard, not the 
+    technology.</p> <p>The connection is 
+    surprisingly stable. Tailscale handles 
+    network transitions smoothly - if I start 
+    on WiFi and switch to cellular, the SSH 
+    session stays alive. Sometimes there's a 
+    brief pause, but it reconnects 
+    automatically.</p> <h2>Optional: Add tmux 
+    for Session Persistence</h2> <p>If you want 
+    sessions that survive disconnections, 
+    install tmux on your Mac:</p> 
+    <pre><code><span class="command">brew 
+    install</span> tmux</code></pre> <p>Then 
+    when you SSH in, start a tmux session:</p> 
+    <pre><code><span class="command">tmux 
+    new</span> -s claude</code></pre> <p>If you 
+    disconnect, your Claude Code session keeps 
+    running. When you reconnect, just 
+    attach:</p> <pre><code><span 
+    class="command">tmux attach</span> -t 
+    claude</code></pre> <p>You pick up exactly 
+    where you left off.</p> <h2>Why This 
+    Works</h2> <p>This setup works because each 
+    tool does one thing well. Tailscale handles 
+    networking and makes your devices feel like 
+    they're on the same local network. Termius 
+    provides a solid mobile terminal 
+    experience. SSH is SSH - reliable, simple, 
+    universal. Claude Code just needs a 
+    terminal.</p> <p>No custom apps, no 
+    complicated configuration, no monthly 
+    subscriptions beyond Tailscale (which has a 
+    generous free tier). It's just standard 
+    Unix tools working together the way they 
+    were designed to.</p> <p>Total setup time? 
+    About 15 minutes. And it's worked 
+    flawlessly since I configured it.</p>
+</div> ``` </body>
+</html>
